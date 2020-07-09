@@ -9,26 +9,26 @@ from utils.get_dataset import get_dataset
 
 project_path = path.abspath(path.dirname(__file__))
 
-def main(dataset_name: str):
-    dataset = get_dataset(dataset_name)
+def main():
+    datasets = get_dataset()
+    for dataset in datasets:
+        X = dataset["X"]
+        y = dataset["y"]
+        test_percentages = dataset["test_percentage"]
+        layer_sizes = dataset["layer_sizes"]
 
-    X = dataset["X"]
-    y = dataset["y"]
-    test_percentages = dataset["test_percentage"]
-    layer_sizes = dataset["layer_sizes"]
+        percentage = test_percentage_test(X, test_percentages, y, 5)
+        layer = test_layer_size(X, 0.2, y, layer_sizes)
 
-    percentage = test_percentage_test(X, test_percentages, y, 5)
-    layer = test_layer_size(X, 0.2, y, layer_sizes)
+        plt.scatter(percentage.keys(), percentage.values())
+        output_path = path.join(project_path, "..", f"./outputs/neural_percentage_{dataset['tag']}")
+        plt.savefig(output_path)
+        plt.clf()
 
-    plt.scatter(percentage.keys(), percentage.values())
-    output_path = path.join(project_path, "..", f"./outputs/neural_percentage_{dataset_name}")
-    plt.savefig(output_path)
-    plt.clf()
-
-    plt.scatter(layer.keys(), layer.values())
-    output_path = path.join(project_path, "..", f"./outputs/neural_layers_{dataset_name}")
-    plt.savefig(output_path)
-    plt.clf()
+        plt.scatter(layer.keys(), layer.values())
+        output_path = path.join(project_path, "..", f"./outputs/neural_layers_{dataset['tag']}")
+        plt.savefig(output_path)
+        plt.clf()
 
 def test_percentage_test(X, test_percentages, y, layer_size):
     accuracies = {}
@@ -60,6 +60,7 @@ def get_accuracy(X, test_percentage, y, solver, layer_size):
 
 
 if __name__ == '__main__':
-    program_args = parser().parse_args()
-    main(program_args.dataset)
+    # program_args = parser().parse_args()
+    # main(program_args.dataset)
+    main()
     exit()

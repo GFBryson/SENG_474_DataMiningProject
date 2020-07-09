@@ -13,7 +13,7 @@ Wk1_column = 0
 csv_rows = []
 for row in reader:
     if index == 0:
-        csv_rows.append(",".join(row))
+        # csv_rows.append(",".join(row))
         index_column = row.index("HealthIndexChange")
         Wk4_column = row.index("Cases after 4 weeks")
         Wk3_column = row.index("Cases after 3 weeks")

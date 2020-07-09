@@ -5,31 +5,32 @@ from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
-from utils import command_parser as parser
+# from utils import command_parser as parser
 from utils.get_dataset import get_dataset
 
 project_path = path.abspath(path.dirname(__file__))
 
-def main(dataset_name: str):
-    dataset = get_dataset(dataset_name)
+def main():
+    datasets = get_dataset()
 
-    X = dataset["X"]
-    y = dataset["y"]
-    test_percentages = dataset["test_percentage"]
-    splitters = dataset["tree_splitters"]
+    for dataset in datasets:
+        X = dataset["X"]
+        y = dataset["y"]
+        test_percentages = dataset["test_percentage"]
+        splitters = dataset["tree_splitters"]
 
-    percentage = test_percentage_test(X, test_percentages, y, "gini")
-    splitters = test_splitter(X, 0.2, y, splitters)
+        percentage = test_percentage_test(X, test_percentages, y, "gini")
+        splitters = test_splitter(X, 0.2, y, splitters)
 
-    plt.scatter(percentage.keys(), percentage.values(), marker='o')
-    output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset_name}")
-    plt.savefig(output_path)
-    plt.clf()
+        plt.scatter(percentage.keys(), percentage.values(), marker='o')
+        output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset['tag']}")
+        plt.savefig(output_path)
+        plt.clf()
 
-    plt.scatter(splitters.keys(), splitters.values(), marker='o')
-    output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset_name}")
-    plt.savefig(output_path)
-    plt.clf()
+        plt.scatter(splitters.keys(), splitters.values(), marker='o')
+        output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset['tag']}")
+        plt.savefig(output_path)
+        plt.clf()
 
 
     pass
@@ -68,5 +69,6 @@ def get_accuracy(X, test_percentage, y, splitter):
 
 
 if __name__ == '__main__':
-    program_args = parser.decision_tree_commandline_parser().parse_args()
-    main(program_args.dataset)
+    # program_args = parser.decision_tree_commandline_parser().parse_args()
+    # main(program_args.dataset)
+    main()

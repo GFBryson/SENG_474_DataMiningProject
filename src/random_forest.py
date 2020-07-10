@@ -7,10 +7,11 @@ from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
-from utils import command_parser as parser
+# from utils import command_parser as parser
 from utils.get_dataset import get_dataset
 
 project_path = path.abspath(path.dirname(__file__))
+
 
 def main():
     datasets = get_dataset()
@@ -24,12 +25,17 @@ def main():
         percentage = test_percentage_test(X, test_percentages, y, "gini")
         splitters = test_splitter(X, 0.2, y, splitters)
 
+
         plt.scatter(percentage.keys(), percentage.values())
+        plt.ylabel("Accuracy Score")
+        plt.xlabel("% of data used to train")
         output_path = path.join(project_path, "..", f"./outputs/forrest_percentage_{dataset['tag']}")
         plt.savefig(output_path)
         plt.clf()
 
         plt.scatter(splitters.keys(), splitters.values())
+        plt.ylabel("Accuracy Score")
+        plt.xlabel("tree splitting protocol")
         output_path = path.join(project_path, "..", f"./outputs/forrest_splitters_{dataset['tag']}")
         plt.savefig(output_path)
         plt.clf()

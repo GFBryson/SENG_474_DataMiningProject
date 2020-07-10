@@ -10,6 +10,7 @@ from utils.get_dataset import get_dataset
 
 project_path = path.abspath(path.dirname(__file__))
 
+
 def main():
     datasets = get_dataset()
 
@@ -19,21 +20,27 @@ def main():
         test_percentages = dataset["test_percentage"]
         splitters = dataset["tree_splitters"]
 
+        plt.ylabel("Accuracy Score")
+
         percentage = test_percentage_test(X, test_percentages, y, "gini")
         splitters = test_splitter(X, 0.2, y, splitters)
 
         plt.scatter(percentage.keys(), percentage.values(), marker='o')
+        plt.ylabel("Accuracy Score")
+        plt.xlabel("% of data used to train")
         output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset['tag']}")
         plt.savefig(output_path)
         plt.clf()
 
         plt.scatter(splitters.keys(), splitters.values(), marker='o')
+        plt.ylabel("Accuracy Score")
+        plt.xlabel("tree splitting protocol")
         output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset['tag']}")
         plt.savefig(output_path)
         plt.clf()
 
-
     pass
+
 
 def test_percentage_test(X, test_percentages, y, splitter):
     accuracies = {}

@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 # from utils import command_parser as parser
-# from utils.get_dataset import get_dataset
+from utils.get_dataset import get_dataset
 
 project_path = path.abspath(path.dirname(__file__))
 
@@ -71,7 +71,6 @@ def main():
         plt.xticks(rotation=90)
         plt.title('Effectiveness of Features')
         plt.tight_layout()
-        output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
         plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
                  fontsize='xx-small')
         output_path = path.join(project_path, "..", "outputs",
@@ -94,7 +93,7 @@ def main():
     plt.xticks(rotation=90)
     plt.title('Effectiveness of Features')
     plt.tight_layout()
-    output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_overall")
+    output_path = path.join(project_path, "..", "outputs", f"avg_accuracy_features_overall_{features_string_dash}")
     plt.savefig(output_path)
     plt.clf()
     pass

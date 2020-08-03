@@ -32,7 +32,8 @@ def main():
         plt.scatter(percentage.keys(), percentage.values())
         plt.ylabel("Accuracy Score")
         plt.xlabel("% of data used to train")
-        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+        plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
+                 fontsize='xx-small')
         output_path = path.join(project_path, "..", f"./outputs/forrest_percentage_{dataset['tag']}_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()

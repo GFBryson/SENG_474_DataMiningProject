@@ -48,7 +48,7 @@ def main():
                 tempX = X.drop(features[a], 1)
                 X_train, X_test, y_train, y_test = train_test_split(tempX, y, test_size=0.5, random_state=1)
 
-                #this is the accuracy when a specific feature is removed (positive means accuracy got worse when removed, positive means accuracy got better when removed)
+                #this is the accuracy when a specific feature is removed (positive means accuracy got worse when removed, negative means accuracy got better when removed)
                 percentage = test_percentage_test(X_train, y_train, X_test, y_test)
 
                 relative_effectiveness = full_percentage[0.5] - percentage[0.5]

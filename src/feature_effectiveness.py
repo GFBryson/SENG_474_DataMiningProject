@@ -68,10 +68,9 @@ def main():
         plt.xlabel('Feature')
         plt.xticks(rotation=90)
         plt.title('Effectiveness of Features')
-        # output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
-        # plt.savefig(output_path)
-        # plt.clf()
-        plt.show()
+        output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
+        plt.savefig(output_path)
+        plt.clf()
     pass
 
 

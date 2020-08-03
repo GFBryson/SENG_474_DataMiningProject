@@ -22,7 +22,9 @@ project_path = path.abspath(path.dirname(__file__))
 def main():
     datasets = get_dataset()
 
-
+    overall_effectiveness = []
+    for featureName in datasets[0]["feature_names"]:
+            overall_effectiveness.append({featureName: 0})
     # for x in range(0,100):
     for dataset in datasets:
         avg_effectiveness = []
@@ -55,6 +57,9 @@ def main():
                 for item in avg_effectiveness:
                     if feature_dropped in item.keys():
                         item[feature_dropped] += relative_effectiveness
+                for item2 in overall_effectiveness:
+                    if feature_dropped in item2.keys():
+                        item2[feature_dropped] += relative_effectiveness
         objects = []
         scores = []
         axis=[]
@@ -74,6 +79,24 @@ def main():
         plt.savefig(output_path)
         plt.clf()
 
+    objects = []
+    scores = []
+    axis=[]
+    for c in range(0,len(avg_effectiveness)):
+        axis.append(c)
+        objects.append(features[c])
+        scores.append(list(overall_effectiveness[c].values())[0]/(100 * len(dataset)))
+
+    plt.figure(figsize=(9,8))
+    plt.bar(objects, scores)
+    plt.ylabel('Relative Accuracy')
+    plt.xlabel('Feature')
+    plt.xticks(rotation=90)
+    plt.title('Effectiveness of Features')
+    plt.tight_layout()
+    output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_overall")
+    plt.savefig(output_path)
+    plt.clf()
     pass
 
 

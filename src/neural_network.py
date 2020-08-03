@@ -22,18 +22,25 @@ def main():
         percentage = test_percentage_test(X, test_percentages, y, 5)
         layer = test_layer_size(X, 0.2, y, layer_sizes)
 
+        features_string_commas = ', '.join(dataset['feature_names'])
+        features_string_dash = "-".join([x.split("_")[0] for x in dataset['feature_names']])
+
+        fig, ax = plt.subplots()
         plt.scatter(percentage.keys(), percentage.values())
         plt.ylabel("Accuracy Score")
         plt.xlabel("% of data used to train")
-        output_path = path.join(project_path, "..", f"./outputs/neural_percentage_{dataset['tag']}")
+        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+        output_path = path.join(project_path, "..", "outputs", f"neural_percentage_{dataset['tag']}_{features_string_dash}")
         plt.savefig(output_path)
 
         plt.clf()
 
+        fig, ax = plt.subplots()
         plt.scatter(layer.keys(), layer.values())
         plt.ylabel("Accuracy Score")
         plt.xlabel("Number of Layers")
-        output_path = path.join(project_path, "..", f"./outputs/neural_layers_{dataset['tag']}")
+        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+        output_path = path.join(project_path, "..", "outputs", f"neural_layers_{dataset['tag']}_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()
 

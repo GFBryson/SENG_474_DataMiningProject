@@ -25,17 +25,24 @@ def main():
         percentage = test_percentage_test(X, test_percentages, y, "gini")
         splitters = test_splitter(X, 0.2, y, splitters)
 
+        features_string_commas = ', '.join(dataset['feature_names'])
+        features_string_dash = "-".join([x.split("_")[0] for x in dataset['feature_names']])
+
+        figure, ax = plt.subplot()
         plt.scatter(percentage.keys(), percentage.values(), marker='o')
         plt.ylabel("Accuracy Score")
         plt.xlabel("% of data used to train")
-        output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset['tag']}")
+        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+        output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset['tag']}_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()
 
+        figure, ax = plt.subplot()
         plt.scatter(splitters.keys(), splitters.values(), marker='o')
         plt.ylabel("Accuracy Score")
         plt.xlabel("tree splitting protocol")
-        output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset['tag']}")
+        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+        output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset['tag']}_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()
 

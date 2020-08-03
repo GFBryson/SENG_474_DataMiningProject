@@ -57,18 +57,21 @@ def main():
                         item[feature_dropped] += relative_effectiveness
         objects = []
         scores = []
+        axis=[]
         for c in range(0,len(avg_effectiveness)):
-            objects.append(c)
+            axis.append(c)
+            objects.append(features[c])
             scores.append(list(avg_effectiveness[c].values())[0]/100)
 
         plt.bar(objects, scores)
         plt.ylabel('Relative Accuracy')
         plt.xlabel('Feature')
+        plt.xticks(rotation=90)
         plt.title('Effectiveness of Features')
-        output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
-        plt.savefig(output_path)
-        plt.clf()
-
+        # output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
+        # plt.savefig(output_path)
+        # plt.clf()
+        plt.show()
     pass
 
 

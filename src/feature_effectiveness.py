@@ -63,14 +63,17 @@ def main():
             objects.append(features[c])
             scores.append(list(avg_effectiveness[c].values())[0]/100)
 
+        plt.figure(figsize=(9,8))
         plt.bar(objects, scores)
         plt.ylabel('Relative Accuracy')
         plt.xlabel('Feature')
         plt.xticks(rotation=90)
         plt.title('Effectiveness of Features')
+        plt.tight_layout()
         output_path = path.join(project_path, "..", f"./outputs/avg_accuracy_features_{dataset['tag']}")
         plt.savefig(output_path)
         plt.clf()
+
     pass
 
 

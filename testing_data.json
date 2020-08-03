@@ -1,0 +1,81 @@
+{
+  "data_path": "..\\datasets\\government_response_data_cleaned.csv",
+  "feature_names": [
+    "CountryCode",
+    "Date,C1_School closing",
+    "C2_Workplace closing",
+    "C3_Cancel public events",
+    "C4_Restrictions on gatherings",
+    "C5_Close public transport",
+    "C6_Stay at home requirements",
+    "C7_Restrictions on internal movement",
+    "C8_International travel controls",
+    "H1_Public information campaigns",
+    "H2_Testing policy",
+    "H3_Contact tracing",
+    "ConfirmedCases",
+    "ConfirmedDeaths",
+    "HealthIndexChange",
+    "ContainmentHealthIndex"
+  ],
+  "keys": [
+    "CountryName",
+    "Country-Alpha-3Code",
+    "CountryCode",
+    "Date,C1_School closing",
+    "C2_Workplace closing",
+    "C3_Cancel public events",
+    "C4_Restrictions on gatherings",
+    "C5_Close public transport",
+    "C6_Stay at home requirements",
+    "C7_Restrictions on internal movement",
+    "C8_International travel controls",
+    "H1_Public information campaigns",
+    "H2_Testing policy",
+    "H3_Contact tracing",
+    "ConfirmedCases",
+    "ConfirmedDeaths",
+    "HealthIndexChange",
+    "ContainmentHealthIndex",
+    "Cases after 1 week",
+    "Cases after 2 weeks",
+    "Cases after 3 weeks",
+    "Cases after 4 weeks"
+  ],
+  "WK1_label": "Cases after 1 week",
+  "WK2_label": "Cases after 2 weeks",
+  "WK3_label": "Cases after 3 weeks",
+  "WK4_label": "Cases after 4 weeks",
+  "target_names": [
+    "< 50% diameter narrowing in any major vessel",
+    "> 50% diameter narrowing in any major vessel"
+  ],
+  "test_percentage": [
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "layer_sizes": [
+    3,
+    4,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30
+  ],
+  "tree_splitters": [
+    "gini",
+    "entropy"
+  ],
+  "forrest_splitters": [
+    "mse",
+    "mae"
+  ]
+}

@@ -8,44 +8,45 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 
 # from utils import command_parser as parser
-from utils.get_dataset import get_dataset
+from utils.get_dataset import get_datasets
 
 project_path = path.abspath(path.dirname(__file__))
 
 
 def main():
-    datasets = get_dataset()
+    datasets = get_datasets()
 
     for dataset in datasets:
-        X = dataset["X"]
-        y = dataset["y"]
-        test_percentages = dataset["test_percentage"]
-        splitters = dataset["tree_splitters"]
+        for dataset_configuration in dataset:
+            X = dataset_configuration["X"]
+            y = dataset_configuration["y"]
+            test_percentages = dataset_configuration["test_percentage"]
+            splitters = dataset_configuration["tree_splitters"]
 
-        percentage = test_percentage_test(X, test_percentages, y, "gini")
-        splitters = test_splitter(X, 0.2, y, splitters)
+            percentage = test_percentage_test(X, test_percentages, y, "gini")
+            splitters = test_splitter(X, 0.2, y, splitters)
 
-        features_string_commas = ', '.join(dataset['feature_names'])
-        features_string_dash = "-".join([x.split("_")[0] for x in dataset['feature_names']])
+            features_string_commas = ', '.join(dataset_configuration['feature_names'])
+            features_string_dash = "-".join([x.split("_")[0] for x in dataset_configuration['feature_names']])
 
-        figure, ax = plt.subplot()
-        plt.scatter(percentage.keys(), percentage.values())
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("% of data used to train")
-        plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
-                 fontsize='xx-small')
-        output_path = path.join(project_path, "..", f"./outputs/forrest_percentage_{dataset['tag']}_{features_string_dash}")
-        plt.savefig(output_path)
-        plt.clf()
+            fig, ax = plt.subplots()
+            plt.scatter(percentage.keys(), percentage.values())
+            plt.ylabel("Accuracy Score")
+            plt.xlabel("% of data used to train")
+            plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
+                     fontsize='xx-small')
+            output_path = path.join(project_path, "..", f"./outputs/forrest_percentage_{dataset_configuration['tag']}_{features_string_dash}")
+            plt.savefig(output_path)
+            plt.clf()
 
-        figure, ax = plt.subplot()
-        plt.scatter(splitters.keys(), splitters.values())
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("tree splitting protocol")
-        plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
-        output_path = path.join(project_path, "..", f"./outputs/forrest_splitters_{dataset['tag']}_{features_string_dash}")
-        plt.savefig(output_path)
-        plt.clf()
+            fig, ax = plt.subplots()
+            plt.scatter(splitters.keys(), splitters.values())
+            plt.ylabel("Accuracy Score")
+            plt.xlabel("tree splitting protocol")
+            plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+            output_path = path.join(project_path, "..", f"./outputs/forrest_splitters_{dataset_configuration['tag']}_{features_string_dash}")
+            plt.savefig(output_path)
+            plt.clf()
 
 
 def test_percentage_test(X, test_percentages, y, splitter, test_rounds = 5):

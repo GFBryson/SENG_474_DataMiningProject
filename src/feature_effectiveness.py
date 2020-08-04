@@ -6,97 +6,98 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 # from utils import command_parser as parser
-from utils.get_dataset import get_dataset
+from utils.get_dataset import get_datasets
 
 project_path = path.abspath(path.dirname(__file__))
 
 
 def main():
-    datasets = get_dataset()
+    datasets = get_datasets()
 
-    overall_effectiveness = []
-    for featureName in datasets[0]["feature_names"]:
-            overall_effectiveness.append({featureName: 0})
-    # for x in range(0,100):
     for dataset in datasets:
-        avg_effectiveness = []
-        for featureName in datasets[0]["feature_names"]:
-            avg_effectiveness.append({featureName: 0})
-        # run multiple times to find an average
-        for a in range(0, 100):
-            X = dataset["X"]
-            y = dataset["y"]
-            test_percentages = dataset["test_percentage"]
-            splitters = dataset["tree_splitters"]
+            # for dataset_configuration in dataset:
+        overall_effectiveness = []
+        for featureName in dataset[0]["feature_names"]:
+                overall_effectiveness.append({featureName: 0})
+        # for x in range(0,100):
+        for dataset_configuration in dataset:
+            avg_effectiveness = []
+            for featureName in dataset[0]["feature_names"]:
+                avg_effectiveness.append({featureName: 0})
+            # run multiple times to find an average
+            for a in range(0, 100):
+                X = dataset_configuration["X"]
+                y = dataset_configuration["y"]
+                test_percentages = dataset_configuration["test_percentage"]
+                splitters = dataset_configuration["tree_splitters"]
 
-            # Keep the splits the same so test results are reliable
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=1)
+                # Keep the splits the same so test results are reliable
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=1)
 
-            # this is the accuracy when no features have been removed
-            full_percentage = test_percentage_test(X_train, y_train, X_test, y_test)
+                # this is the accuracy when no features have been removed
+                full_percentage = test_percentage_test(X_train, y_train, X_test, y_test)
 
-            features = dataset["feature_names"]
+                features = dataset_configuration["feature_names"]
 
-            for a in range(0, len(features)):
-                feature_dropped = features[a]
-                tempX = X.drop(features[a], 1)
-                X_train, X_test, y_train, y_test = train_test_split(tempX, y, test_size=0.5, random_state=1)
+                for a in range(0, len(features)):
+                    feature_dropped = features[a]
+                    tempX = X.drop(features[a], 1)
+                    X_train, X_test, y_train, y_test = train_test_split(tempX, y, test_size=0.5, random_state=1)
 
-                # this is the accuracy when a specific feature is removed (positive means accuracy got worse when removed, negative means accuracy got better when removed)
-                percentage = test_percentage_test(X_train, y_train, X_test, y_test)
+                    # this is the accuracy when a specific feature is removed (positive means accuracy got worse when removed, negative means accuracy got better when removed)
+                    percentage = test_percentage_test(X_train, y_train, X_test, y_test)
 
-                relative_effectiveness = full_percentage[0.5] - percentage[0.5]
-                for item in avg_effectiveness:
-                    if feature_dropped in item.keys():
-                        item[feature_dropped] += relative_effectiveness
-                for item2 in overall_effectiveness:
-                    if feature_dropped in item2.keys():
-                        item2[feature_dropped] += relative_effectiveness
+                    relative_effectiveness = full_percentage[0.5] - percentage[0.5]
+                    for item in avg_effectiveness:
+                        if feature_dropped in item.keys():
+                            item[feature_dropped] += relative_effectiveness
+                    for item2 in overall_effectiveness:
+                        if feature_dropped in item2.keys():
+                            item2[feature_dropped] += relative_effectiveness
+            objects = []
+            scores = []
+            axis=[]
+            for c in range(0,len(avg_effectiveness)):
+                axis.append(c)
+                objects.append(features[c])
+                scores.append(list(avg_effectiveness[c].values())[0]/100)
+
+            plt.figure(figsize=(9,8))
+            features_string_commas = ', '.join(dataset_configuration['feature_names'])
+            features_string_dash = "-".join([x.split("_")[0] for x in dataset_configuration['feature_names']])
+
+            fig, ax = plt.subplots()
+            plt.bar(objects, scores)
+            plt.ylabel('Relative Accuracy')
+            plt.xlabel('Feature')
+            plt.xticks(rotation=90)
+            plt.title('Effectiveness of Features')
+            plt.tight_layout()
+            plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
+                     fontsize='xx-small')
+            output_path = path.join(project_path, "..", "outputs",
+                                    f"avg_accuracy_features_{dataset_configuration['tag']}_{features_string_dash}")
+            plt.savefig(output_path)
+            plt.clf()
+
         objects = []
         scores = []
         axis=[]
         for c in range(0,len(avg_effectiveness)):
             axis.append(c)
             objects.append(features[c])
-            scores.append(list(avg_effectiveness[c].values())[0]/100)
+            scores.append(list(overall_effectiveness[c].values())[0]/(100 * len(dataset_configuration)))
 
         plt.figure(figsize=(9,8))
-        features_string_commas = ', '.join(dataset['feature_names'])
-        features_string_dash = "-".join([x.split("_")[0] for x in dataset['feature_names']])
-
-        fig, ax = plt.subplots()
         plt.bar(objects, scores)
         plt.ylabel('Relative Accuracy')
         plt.xlabel('Feature')
         plt.xticks(rotation=90)
         plt.title('Effectiveness of Features')
         plt.tight_layout()
-        plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
-                 fontsize='xx-small')
-        output_path = path.join(project_path, "..", "outputs",
-                                f"avg_accuracy_features_{dataset['tag']}_{features_string_dash}")
+        output_path = path.join(project_path, "..", "outputs", f"avg_accuracy_features_overall_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()
-
-    objects = []
-    scores = []
-    axis=[]
-    for c in range(0,len(avg_effectiveness)):
-        axis.append(c)
-        objects.append(features[c])
-        scores.append(list(overall_effectiveness[c].values())[0]/(100 * len(dataset)))
-
-    plt.figure(figsize=(9,8))
-    plt.bar(objects, scores)
-    plt.ylabel('Relative Accuracy')
-    plt.xlabel('Feature')
-    plt.xticks(rotation=90)
-    plt.title('Effectiveness of Features')
-    plt.tight_layout()
-    output_path = path.join(project_path, "..", "outputs", f"avg_accuracy_features_overall_{features_string_dash}")
-    plt.savefig(output_path)
-    plt.clf()
-    pass
 
 
 def test_percentage_test(X_train, y_train, X_test, y_test, test_rounds = 5):

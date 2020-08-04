@@ -6,58 +6,65 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 # from utils import command_parser as parser
-from utils.get_dataset import get_dataset
+from utils.get_dataset import get_datasets
 
 project_path = path.abspath(path.dirname(__file__))
 
 
 def main():
-    datasets = get_dataset()
+    datasets = get_datasets()
 
     for dataset in datasets:
-        X = dataset["X"]
-        y = dataset["y"]
-        test_percentages = dataset["test_percentage"]
-        splitters = dataset["tree_splitters"]
+        for dataset_configuration in dataset:
+            X = dataset_configuration["X"]
+            y = dataset_configuration["y"]
+            test_percentages = dataset_configuration["test_percentage"]
+            splitters = dataset_configuration["tree_splitters"]
 
-        plt.ylabel("Accuracy Score")
+            plt.ylabel("Accuracy Score")
 
-        percentage = test_percentage_test(X, test_percentages, y, "gini")
-        splitters = test_splitter(X, 0.2, y, splitters)
+            percentage = test_percentage_test(X, test_percentages, y, "gini")
+            splitters = test_splitter(X, 0.2, y, splitters)
 
-        plt.scatter(percentage.keys(), percentage.values(), marker='o')
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("% of data used to train")
-        output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset['tag']}")
-        plt.savefig(output_path)
-        plt.clf()
+            features_string_commas = ', '.join(dataset_configuration['feature_names'])
+            features_string_dash = "-".join([x.split("_")[0] for x in dataset_configuration['feature_names']])
 
-        plt.scatter(splitters.keys(), splitters.values(), marker='o')
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("tree splitting protocol")
-        output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset['tag']}")
-        plt.savefig(output_path)
-        plt.clf()
+            fig, ax = plt.subplots()
+            plt.scatter(percentage.keys(), percentage.values(), marker='o')
+            plt.ylabel("Accuracy Score")
+            plt.xlabel("% of data used to train")
+            plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+            output_path = path.join(project_path, "..", f"./outputs/tree_percentage_{dataset_configuration['tag']}_{features_string_dash}")
+            plt.savefig(output_path)
+            plt.clf()
 
-    pass
+            fig, ax = plt.subplots()
+            plt.scatter(splitters.keys(), splitters.values(), marker='o')
+            plt.ylabel("Accuracy Score")
+            plt.xlabel("tree splitting protocol")
+            plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
+            output_path = path.join(project_path, "..", f"./outputs/tree_splitters_{dataset_configuration['tag']}_{features_string_dash}")
+            plt.savefig(output_path)
+            plt.clf()
 
 
-def test_percentage_test(X, test_percentages, y, splitter):
+
+def test_percentage_test(X, test_percentages, y, splitter, test_rounds = 5):
     accuracies = {}
     for percentage in test_percentages:
         acc = 0
-        for i in range(5):
+        for i in range(test_rounds):
             acc += get_accuracy(X, percentage, y, splitter)
-        accuracies[percentage] = acc / 5
+        accuracies[percentage] = acc / test_rounds
     print("test", accuracies)
     return accuracies
 
 
-def test_splitter(X, percentage, y, splitters):
+def test_splitter(X, percentage, y, splitters, test_rounds = 5):
     accuracies = {}
     for splitter in splitters:
         acc = 0
-        for i in range(5):
+        for i in range(test_rounds):
             acc += get_accuracy(X, percentage, y, splitter)
         accuracies[splitter] = acc / 5
     print("test", accuracies)

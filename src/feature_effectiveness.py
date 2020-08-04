@@ -99,24 +99,24 @@ def main():
     pass
 
 
-def test_percentage_test(X_train, y_train, X_test, y_test):
+def test_percentage_test(X_train, y_train, X_test, y_test, test_rounds = 5):
     accuracies = {}
     percentage = 0.5
     acc = 0
-    for i in range(5):
+    for i in range(test_rounds):
         acc += get_accuracy(X_train, y_train, X_test, y_test)
-    accuracies[percentage] = acc / 5
+    accuracies[percentage] = acc / test_rounds
     # print("test", accuracies)
     return accuracies
 
 
-def test_splitter(X, percentage, y, splitters):
+def test_splitter(X, percentage, y, splitters, test_rounds = 5):
     accuracies = {}
     for splitter in splitters:
         acc = 0
-        for i in range(5):
+        for i in range(test_rounds):
             acc += get_accuracy(X, percentage, y, splitter)
-        accuracies[splitter] = acc / 5
+        accuracies[splitter] = acc / test_rounds
     # print("test", accuracies)
     return accuracies
 

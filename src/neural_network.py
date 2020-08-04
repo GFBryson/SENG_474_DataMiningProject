@@ -45,24 +45,24 @@ def main():
         plt.clf()
 
 
-def test_percentage_test(X, test_percentages, y, layer_size):
+def test_percentage_test(X, test_percentages, y, layer_size, test_rounds = 5):
     accuracies = {}
     for percentage in test_percentages:
         acc = 0
-        for i in range(5):
+        for i in range(test_rounds):
             acc += get_accuracy(X, percentage, y, "lbfgs", layer_size)
-        accuracies[percentage] = acc / 5
+        accuracies[percentage] = acc / test_rounds
     print("test", accuracies)
     return accuracies
 
 
-def test_layer_size(X, percentage, y, layer_size):
+def test_layer_size(X, percentage, y, layer_size, test_rounds = 5):
     accuracies = {}
     for size in layer_size:
         acc = 0
-        for i in range(5):
+        for i in range(test_rounds):
             acc += get_accuracy(X, percentage, y, "lbfgs", int(size))
-        accuracies[size] = acc / 5
+        accuracies[size] = acc / test_rounds
     print("layer", accuracies)
     return accuracies
 

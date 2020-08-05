@@ -13,7 +13,8 @@ The following table describes each column in the dataset.
 | Row Title                            | Description                                                  | Coding                                                       |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | CountryName                          | Name of country                                              | N/A                                                          |
-| CountryCode                          | Abbreviated country name (e.x. Canada -> CAN)                | N/A                                                          |
+| CountryCode (Alpha)                  | Abbreviated country name (e.x. Canada -> CAN)                | N/A                                                          |
+| Countrycode (Numberical)             | Numberical code for the country                              | N/A                                                          |
 | Date                                 | Date                                                         | N/A                                                          |
 | C1_School closing                    | Record closings of schools and universities                  | 0 - no measures<br/>1 - recommend closing<br/>2 - require closing (only some levels or categories, eg just high school, or just public schools)<br/>3 - require closing all levels<br />Blank - no data |
 | C2_Workplace closing                 | Record closings of workplaces                                | 0 - no measures<br/>1 - recommend closing (or recommend work from home)<br/>2 - require closing (or work from home) for some sectors or categories of workers<br/>3 - require closing (or work from home) for all-but-essential workplaces (eg grocery stores, doctors)<br/>Blank - no data |

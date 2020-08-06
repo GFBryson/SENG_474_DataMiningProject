@@ -1,6 +1,5 @@
 [
   {
-    "data_path": "..\\datasets\\government_response_data_cleaned.csv",
     "feature_names": [
       "Date,C1_School closing",
       "C2_Workplace closing",
@@ -42,13 +41,27 @@
       "Cases after 3 weeks",
       "Cases after 4 weeks"
     ],
-    "WK1_label": "Cases after 1 week",
-    "WK2_label": "Cases after 2 weeks",
-    "WK3_label": "Cases after 3 weeks",
-    "WK4_label": "Cases after 4 weeks",
-    "target_names": [
-      "< 50% diameter narrowing in any major vessel",
-      "> 50% diameter narrowing in any major vessel"
+    "datasets": [
+      {
+        "tag": "WK1",
+        "label": "Cases after 1 week",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK1.csv"
+      },
+      {
+        "tag": "WK2",
+        "label":"Cases after 2 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK2.csv"
+      },
+      {
+        "tag":"WK3",
+        "label":"Cases after 3 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK3.csv"
+      },
+      {
+        "tag": "WK4",
+        "label":"Cases after 4 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK4.csv"
+      }
     ],
     "test_percentage": [
       0.2,
@@ -80,7 +93,7 @@
     ]
   },
   {
-    "data_path": "..\\datasets\\government_response_data_cleaned.csv",
+
     "feature_names": [
       "CountryCode",
       "Date,C1_School closing",
@@ -123,13 +136,27 @@
       "Cases after 3 weeks",
       "Cases after 4 weeks"
     ],
-    "WK1_label": "Cases after 1 week",
-    "WK2_label": "Cases after 2 weeks",
-    "WK3_label": "Cases after 3 weeks",
-    "WK4_label": "Cases after 4 weeks",
-    "target_names": [
-      "< 50% diameter narrowing in any major vessel",
-      "> 50% diameter narrowing in any major vessel"
+    "datasets": [
+      {
+        "tag": "WK1",
+        "label": "Cases after 1 week",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK1.csv"
+      },
+      {
+        "tag": "WK2",
+        "label":"Cases after 2 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK2.csv"
+      },
+      {
+        "tag":"WK3",
+        "label":"Cases after 3 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK3.csv"
+      },
+      {
+        "tag": "WK4",
+        "label":"Cases after 4 weeks",
+        "data_path": "..\\datasets\\government_response_data_cleaned_WK4.csv"
+      }
     ],
     "test_percentage": [
       0.2,

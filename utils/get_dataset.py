@@ -14,14 +14,14 @@ def get_datasets():
     configs = json.loads(open(json_path, "r").read())
     formatted_trials=[]
     for dataset_configuration in configs:
-        keys, datasets, test_percentage, feature_names, layer_sizes, tree_splitters, forrest_splitters = itemgetter(
+        keys, datasets, test_percentage, feature_names, layer_sizes, tree_splitters = itemgetter(
             "keys",
             "datasets",
             "test_percentage",
             "feature_names",
             "layer_sizes",
             "tree_splitters",
-            "forrest_splitters")(
+            )(
             dataset_configuration)
 
         formatted_datasets=[]
@@ -37,8 +37,7 @@ def get_datasets():
                 "test_percentage": test_percentage,
                 "feature_names": feature_names,
                 "layer_sizes": layer_sizes,
-                "tree_splitters": tree_splitters,
-                "forrest_splitters": forrest_splitters
+                "tree_splitters": tree_splitters
             }
             formatted_datasets.append(formatted_dataset)
 

@@ -35,7 +35,7 @@ def main():
             plt.xlabel("% of data used to train")
             plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
                      fontsize='xx-small')
-            output_path = path.join(project_path, "..", f"./outputs/forrest_percentage_{dataset_configuration['tag']}_{features_string_dash}")
+            output_path = path.join(project_path, "..", "outputs", dataset_configuration['tag'], f"forrest_percentage_{dataset_configuration['tag']}_{features_string_dash}")
             plt.savefig(output_path)
             plt.clf()
 
@@ -44,7 +44,7 @@ def main():
             plt.ylabel("Accuracy Score")
             plt.xlabel("tree splitting protocol")
             plt.text(0,1,f"features used: {features_string_commas}", wrap=True,transform=ax.transAxes, fontsize='xx-small')
-            output_path = path.join(project_path, "..", f"./outputs/forrest_splitters_{dataset_configuration['tag']}_{features_string_dash}")
+            output_path = path.join(project_path, "..", "outputs", dataset_configuration['tag'], f"forrest_splitters_{dataset_configuration['tag']}_{features_string_dash}")
             plt.savefig(output_path)
             plt.clf()
 

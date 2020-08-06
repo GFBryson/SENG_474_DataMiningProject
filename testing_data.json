@@ -95,7 +95,7 @@
       "gini",
       "entropy"
     ],
-    "forrest_splitters": [
+    "forrest_regression_vriterion": [
       "mse",
       "mae"
     ]
@@ -198,7 +198,7 @@
       "gini",
       "entropy"
     ],
-    "forrest_splitters": [
+    "forrest_regression_criterion": [
       "mse",
       "mae"
     ]

@@ -75,7 +75,7 @@ def main():
             plt.tight_layout()
             plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
                      fontsize='xx-small')
-            output_path = path.join(project_path, "..", "outputs",
+            output_path = path.join(project_path, "..", "outputs",  dataset_configuration['tag'],
                                     f"avg_accuracy_features_{dataset_configuration['tag']}_{features_string_dash}")
             plt.savefig(output_path)
             plt.clf()

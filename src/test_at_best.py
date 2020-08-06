@@ -49,7 +49,7 @@ def main():
         plt.text(0, 1, f"features used: {features_string_commas}", wrap=True, transform=ax.transAxes,
                  fontsize='xx-small')
         output_path = path.join(project_path, "..", "outputs",
-                                f"Overall_Comparison_Of_Best_Options_{features_string_dash}")
+                                f"Best_Options_{features_string_dash}")
         plt.savefig(output_path)
         plt.clf()
     pass
